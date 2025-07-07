@@ -2,7 +2,7 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import { connectToDatabase } from "./database/db.js";
-import adminRoutes from "./routes/admin-routes.js";
+import adminRouter from "./routes/admin-routes.js";
 import authRouter from "./routes/auth-routes.js";
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRouter);
-app.use("/api/admin", adminRoutes);
+app.use("/api/admin", adminRouter);
 
 // Listen to port
 const PORT = process.env.PORT || 3000;
