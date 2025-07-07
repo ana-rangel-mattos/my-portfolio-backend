@@ -15,6 +15,12 @@ const ProjectSchema = new Schema(
     },
     technologies: {
       type: [String],
+      required: [true],
+    },
+    projectUrl: {
+      type: String,
+      required: [true, "Project Url is required"],
+      trim: true,
     },
     imageUrl: {
       type: String,

@@ -15,12 +15,13 @@ async function postNewProject(req, res) {
     // Upload to cloudinary
     const { imageUrl, imagePublicId } = await uploadImage(req.file.path);
 
-    const { name, description, technologies } = req.body;
+    const { name, description, technologies, projectUrl } = req.body;
 
     // Create new Project
     const newProject = await Project.create({
       imageUrl,
       imagePublicId,
+      projectUrl,
       name,
       description,
       technologies,
