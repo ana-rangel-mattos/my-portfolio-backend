@@ -1,5 +1,8 @@
 import fs from "fs";
-import { uploadImage } from "../helpers/cloudinaryHelpers.js";
+import {
+  deleteImageFromCloud,
+  uploadImage,
+} from "../helpers/cloudinaryHelpers.js";
 import { Project } from "../models/Project.js";
 
 async function postNewProject(req, res) {
@@ -44,4 +47,49 @@ async function postNewProject(req, res) {
   }
 }
 
-export { postNewProject };
+async function deleteProjectById(req, res) {
+  try {
+    // Check if prject exists
+    const { projectId } = req.params;
+
+    const foundProject = await Project.findById(projectId);
+
+    if (!foundProject) {
+      return res.status(404).json({
+        success: false,
+        message: `Project ${projectId} could not be found. Please try again with valid data.`,
+      });
+    }
+
+    // Delete the project image from cloudinary
+    await deleteImageFromCloud(foundProject.imagePublicId);
+
+    // Delete project from MongoDB
+    await foundProject.deleteOne();
+
+    // Check if it is deleted
+    const deletedProject = await Project.findById(foundProject._id);
+
+    // Project was deleted
+    if (!deletedProject) {
+      return res.status(204).json({
+        success: true,
+        message: "Project deleted successfully.",
+      });
+    }
+
+    // Project was not deleted
+    return res.status(409).json({
+      success: false,
+      message: "Project could not be deleted. Please try again.",
+    });
+  } catch (error) {
+    console.error("Something went wrong ->", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again.",
+    });
+  }
+}
+
+export { deleteProjectById, postNewProject };

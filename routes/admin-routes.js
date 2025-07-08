@@ -1,5 +1,8 @@
 import express from "express";
-import { postNewProject } from "../controllers/admin-controller.js";
+import {
+  deleteProjectById,
+  postNewProject,
+} from "../controllers/admin-controller.js";
 import authMiddleware from "../middlewares/auth-middleware.js";
 import multerMiddleware from "../middlewares/upload-middleware.js";
 
@@ -11,5 +14,7 @@ adminRouter.post(
   multerMiddleware.single("image"),
   postNewProject
 );
+
+adminRouter.delete("/projects/:projectId", authMiddleware, deleteProjectById);
 
 export default adminRouter;

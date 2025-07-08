@@ -14,4 +14,15 @@ async function uploadImage(filePath) {
   }
 }
 
-export { uploadImage };
+async function deleteImageFromCloud(publicId) {
+  try {
+    await cloudinary.uploader.destroy(publicId, {
+      resource_type: "image",
+    });
+  } catch (error) {
+    console.error("Error while deleting an image from cloudinary ->", error);
+    throw new Error("Error while deleting an image from cloudinary");
+  }
+}
+
+export { deleteImageFromCloud, uploadImage };
