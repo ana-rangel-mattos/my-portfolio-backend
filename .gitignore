@@ -141,9 +141,8 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# End of https://www.toptal.com/developers/gitignore/api/node
-.env
-
 # Seed database
-/database/seed.js
-/uploads
+src/database/seed.ts
+
+# Uploads from cloudinary
+uploads/
