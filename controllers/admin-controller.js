@@ -92,4 +92,60 @@ async function deleteProjectById(req, res) {
   }
 }
 
-export { deleteProjectById, postNewProject };
+async function fetchProjectsByUserId(req, res) {
+  try {
+    const { userId } = req.params;
+    const { techs = [] } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+    const skip = (page - 1) * limit;
+    const sortBy = req.query.sortBy || "createdAt";
+    const sortByOrder = req.query.sortByOrder === "asc" ? 1 : -1;
+
+    const query = {
+      uploadedBy: userId,
+    };
+
+    if (techs && techs.length > 0) {
+      const techsArray = techs.split(",");
+      query.technologies = { $in: techsArray };
+    }
+
+    const totalProjects = await Project.find(query).countDocuments();
+
+    const totalPages = Math.ceil(totalProjects / limit);
+
+    const sortObj = {};
+    sortObj[sortBy] = sortByOrder;
+
+    const projects = await Project.find(query)
+      .sort(sortObj)
+      .skip(skip)
+      .limit(limit);
+
+    if (!projects) {
+      return res.status(400).json({
+        success: false,
+        message: "This user has not uploaded any project.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Successfully fetched user projects.",
+      currentPage: page,
+      totalPages,
+      totalProjects,
+      data: projects,
+    });
+  } catch (error) {
+    console.error("Something went wrong ->", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again.",
+    });
+  }
+}
+
+export { deleteProjectById, fetchProjectsByUserId, postNewProject };

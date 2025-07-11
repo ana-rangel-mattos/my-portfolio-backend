@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteProjectById,
+  fetchProjectsByUserId,
   postNewProject,
 } from "../controllers/admin-controller.js";
 import authMiddleware from "../middlewares/auth-middleware.js";
@@ -16,5 +17,7 @@ adminRouter.post(
 );
 
 adminRouter.delete("/projects/:projectId", authMiddleware, deleteProjectById);
+
+adminRouter.get("/projects/:userId", authMiddleware, fetchProjectsByUserId);
 
 export default adminRouter;
