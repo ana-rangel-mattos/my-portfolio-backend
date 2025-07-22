@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import fs from "fs";
+import mongoose from "mongoose";
 import {
   deleteImageFromCloud,
   uploadImage,
@@ -130,9 +131,8 @@ async function fetchProjectsByUserId(req: FetchRequest, res: Response) {
     const sortBy = req.query.sortBy || "createdAt";
     const sortByOrder = req.query.sortByOrder === "asc" ? 1 : -1;
 
-    const query = {
+    const query: { uploadedBy: mongoose.Types.ObjectId; technologies?: any } = {
       uploadedBy: userId,
-      technologies: {},
     };
 
     if (techs && techs.length > 0) {
