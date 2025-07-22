@@ -13,8 +13,8 @@ interface MulterRequest extends Request {
 
 interface FetchRequest extends Request {
   query: {
-    page: string;
-    limit: string;
+    page?: string;
+    limit?: string;
     techs?: string;
     sortBy?: "createdAt" | "updatedAt" | "name" | "description";
     sortByOrder?: "asc" | "desc";
@@ -121,9 +121,10 @@ async function fetchProjectsByUserId(req: FetchRequest, res: Response) {
 
     const userId = admin._id;
 
-    const { techs } = req.query;
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const techs = req.query.techs === undefined ? "" : req.query.techs;
+    const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+    const limit =
+      req.query.limit === undefined ? 10 : parseInt(req.query.limit);
 
     const skip = (page - 1) * limit;
     const sortBy = req.query.sortBy || "createdAt";
