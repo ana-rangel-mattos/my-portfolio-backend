@@ -1,11 +1,23 @@
-import multer from "multer";
+import { Request } from "express";
+import multer, { FileFilterCallback } from "multer";
 import path from "path";
 
+type DestinationCallback = (error: Error | null, destination: string) => void;
+type FilenameCallback = (error: Error | null, filename: string) => void;
+
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: function (
+    req: Request,
+    file: Express.Multer.File,
+    cb: DestinationCallback
+  ) {
     cb(null, "uploads/");
   },
-  filename: function (req, file, cb) {
+  filename: function (
+    req: Request,
+    file: Express.Multer.File,
+    cb: FilenameCallback
+  ) {
     cb(
       null,
       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
@@ -14,7 +26,11 @@ const storage = multer.diskStorage({
 });
 
 // File filter function
-function checkFileFilter(req, file, cb) {
+function checkFileFilter(
+  req: Request,
+  file: Express.Multer.File,
+  cb: FileFilterCallback
+) {
   if (file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {

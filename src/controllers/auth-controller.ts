@@ -1,10 +1,11 @@
 import bcrypt from "bcryptjs";
+import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
 
 const { sign } = jwt;
 
-async function loginUser(req, res) {
+async function loginUser(req: Request, res: Response) {
   try {
     const { username, password } = req.body;
 
@@ -33,7 +34,7 @@ async function loginUser(req, res) {
         userId: foundUser._id,
         username: foundUser.username,
       },
-      process.env.JWT_SECRET_KEY,
+      process.env.JWT_SECRET_KEY!,
       { expiresIn: "15d" }
     );
 

@@ -18,6 +18,6 @@ adminRouter.post(
 
 adminRouter.delete("/projects/:projectId", authMiddleware, deleteProjectById);
 
-adminRouter.get("/projects/:userId", authMiddleware, fetchProjectsByUserId);
+adminRouter.get("/projects", fetchProjectsByUserId);
 
 export default adminRouter;

@@ -1,6 +1,6 @@
 import cloudinary from "../config/cloudinary.js";
 
-async function uploadImage(filePath) {
+async function uploadImage(filePath: string) {
   try {
     const result = await cloudinary.uploader.upload(filePath);
 
@@ -14,7 +14,7 @@ async function uploadImage(filePath) {
   }
 }
 
-async function deleteImageFromCloud(publicId) {
+async function deleteImageFromCloud(publicId: string) {
   try {
     await cloudinary.uploader.destroy(publicId, {
       resource_type: "image",

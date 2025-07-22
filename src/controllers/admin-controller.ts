@@ -1,11 +1,27 @@
+import { Request, Response } from "express";
 import fs from "fs";
 import {
   deleteImageFromCloud,
   uploadImage,
 } from "../helpers/cloudinaryHelpers.js";
 import { Project } from "../models/Project.js";
+import { User } from "../models/User.js";
 
-async function postNewProject(req, res) {
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
+interface FetchRequest extends Request {
+  query: {
+    page: string;
+    limit: string;
+    techs?: string;
+    sortBy?: "createdAt" | "updatedAt" | "name" | "description";
+    sortByOrder?: "asc" | "desc";
+  };
+}
+
+async function postNewProject(req: MulterRequest, res: Response) {
   try {
     // If there is no image
     if (!req.file) {
@@ -47,7 +63,7 @@ async function postNewProject(req, res) {
   }
 }
 
-async function deleteProjectById(req, res) {
+async function deleteProjectById(req: Request, res: Response) {
   try {
     // Check if prject exists
     const { projectId } = req.params;
@@ -92,10 +108,20 @@ async function deleteProjectById(req, res) {
   }
 }
 
-async function fetchProjectsByUserId(req, res) {
+async function fetchProjectsByUserId(req: FetchRequest, res: Response) {
   try {
-    const { userId } = req.params;
-    const { techs = [] } = req.query;
+    const admin = await User.findOne({});
+
+    if (!admin) {
+      return res.status(400).json({
+        success: false,
+        message: "No user was found.",
+      });
+    }
+
+    const userId = admin._id;
+
+    const { techs } = req.query;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
 
@@ -105,6 +131,7 @@ async function fetchProjectsByUserId(req, res) {
 
     const query = {
       uploadedBy: userId,
+      technologies: {},
     };
 
     if (techs && techs.length > 0) {
@@ -116,11 +143,10 @@ async function fetchProjectsByUserId(req, res) {
 
     const totalPages = Math.ceil(totalProjects / limit);
 
-    const sortObj = {};
-    sortObj[sortBy] = sortByOrder;
+    const sortStr = `${sortByOrder === 1 ? "" : "-"}${sortBy}`;
 
     const projects = await Project.find(query)
-      .sort(sortObj)
+      .sort(sortStr)
       .skip(skip)
       .limit(limit);
 
