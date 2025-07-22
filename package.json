@@ -4,8 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dist": "nodemon exec",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm install && tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
