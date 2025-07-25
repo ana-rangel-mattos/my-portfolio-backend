@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "npm install && tsc",
-    "start": "node dist/server.js",
-    "dev": "nodemon"
+    "start": "cross-env NODE_ENV=production node dist/server.js",
+    "dev": "cross-env NODE_ENV=development nodemon"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",

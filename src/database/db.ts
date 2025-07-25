@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
 
-export async function connectToDatabase() {
+const { MONGO_USER, MONGO_USER_PASSWORD, MONGO_CLUSTER } = process.env;
+
+export async function connectToDatabase(databaseName: string) {
   try {
-    await mongoose.connect(process.env.MONGO_URL_CONNECTION!);
-    console.log("Database successfully connected.");
+    await mongoose.connect(
+      `mongodb+srv://${MONGO_USER}:${MONGO_USER_PASSWORD}@${MONGO_CLUSTER}/${databaseName}?retryWrites=true&w=majority`
+    );
+    console.log(`Successfully connected with ${databaseName} database.`);
   } catch (error) {
     console.error(error);
   }
