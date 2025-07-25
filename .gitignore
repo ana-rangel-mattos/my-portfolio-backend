@@ -143,6 +143,3 @@ dist
 
 # Seed database
 src/database/seed.ts
-
-# uploads folder
-uploads/
