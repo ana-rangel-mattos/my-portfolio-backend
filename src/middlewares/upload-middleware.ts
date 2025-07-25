@@ -1,4 +1,5 @@
 import { Request } from "express";
+import fs from "fs";
 import multer, { FileFilterCallback } from "multer";
 import path from "path";
 
@@ -11,7 +12,13 @@ const storage = multer.diskStorage({
     file: Express.Multer.File,
     cb: DestinationCallback
   ) {
-    cb(null, "uploads/");
+    const dirPath = "uploads/";
+
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    cb(null, dirPath);
   },
   filename: function (
     req: Request,
