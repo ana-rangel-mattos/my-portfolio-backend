@@ -40,7 +40,9 @@ const ProjectSchema = new Schema(
       default: Date.now,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Project = model("Project", ProjectSchema);

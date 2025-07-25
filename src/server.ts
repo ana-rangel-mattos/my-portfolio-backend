@@ -5,10 +5,13 @@ import { connectToDatabase } from "./database/db.js";
 import adminRouter from "./routes/admin-routes.js";
 import authRouter from "./routes/auth-routes.js";
 
+// Default env to development
+const nodeEnv = process.env.NODE_ENV || "development";
+
 const app = express();
 
 // Connect to database
-connectToDatabase();
+connectToDatabase(nodeEnv);
 
 // Use cors to allow access
 app.use(cors());
