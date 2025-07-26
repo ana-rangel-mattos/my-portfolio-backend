@@ -136,7 +136,21 @@ async function fetchProjectsByUserId(req: FetchRequest, res: Response) {
     };
 
     if (techs && techs.length > 0) {
-      const techsArray = techs.split(",");
+      const techsArray = techs.toLowerCase().split(",");
+
+      for (const tech of techsArray) {
+        if (tech.includes("-")) {
+          techsArray.splice(
+            techsArray.indexOf(tech),
+            1,
+            tech
+              .split("-")
+              .map((el) => el.charAt(0).toUpperCase() + el.slice(1))
+              .join(" ")
+          );
+        }
+      }
+
       query.technologies = { $in: techsArray };
     }
 
