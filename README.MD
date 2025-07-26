@@ -46,7 +46,7 @@ Returns a list of projects with support for filtering, sorting, and pagination.
 
 ##### 🧪 Example
 
-`GET /api/admin/projects?sortBy=createdAt&sortByOrder=desc&page=1&limit=5&techs=React,TypeScript`
+`GET /api/admin/projects?sortBy=createdAt&sortByOrder=desc&page=1&limit=5&techs=React-native`
 
 ```json
 {
@@ -57,16 +57,16 @@ Returns a list of projects with support for filtering, sorting, and pagination.
   "totalProjects": 1,
   "data": [
     {
-      "_id": "686c294c245d0bc9a35a045e",
-      "name": "MoviesDB Web",
-      "description": "Esse projeto é uma aplicação React JS que utiliza a API do TMDB, com o objetivo de ajudar o usuário a achar filmes e séries para assistir.",
-      "technologies": ["React", "CSS3", "React Router"],
-      "projectUrl": "https://gitlab.com/react7094344/MoviesDB",
-      "imageUrl": "https://res.cloudinary.com/dgdcxlr00/image/upload/v1751918923/vufv2tjpehgyt7eonzij.png",
-      "imagePublicId": "vufv2tjpehgyt7eonzij",
-      "uploadedBy": "686bfa32db3d11d1fdea682c",
-      "createdAt": "2025-07-07T20:08:44.342Z",
-      "updatedAt": "2025-07-07T20:08:44.342Z",
+      "_id": "6883e139093bf0962222ea02",
+      "name": "MoviesDB Mobile",
+      "description": "A mobile app for finding recommendations for movies and TV shows to watch, built with React Native, JavaScript, and CSS3. It uses the TMDB API for movies and series.",
+      "technologies": ["React Native", "JavaScript", "CSS"],
+      "projectUrl": "https://gitlab.com/react7094344/moviesdb_reactnative#",
+      "imageUrl": "https://res.cloudinary.com/dgdcxlr00/image/upload/v1753473337/ve873q2ltqxcic5rv5yp.png",
+      "imagePublicId": "ve873q2ltqxcic5rv5yp",
+      "uploadedBy": "6883c8cc6f4a61c49815ea4e",
+      "createdAt": "2025-07-25T19:55:37.684Z",
+      "updatedAt": "2025-07-25T19:55:37.684Z",
       "__v": 0
     }
   ]
