@@ -46,7 +46,7 @@ Returns a list of projects with support for filtering, sorting, and pagination.
 
 ##### 🧪 Example
 
-`GET /api/admin/projects?sortBy=createdAt&sortByOrder=desc&page=1&limit=5&techs=React,TypeScript`
+`GET /api/admin/projects?sortBy=createdAt&sortByOrder=desc&page=1&limit=5&techs=React-native`
 
 ```json
 {
